@@ -1,9 +1,19 @@
-import { UserButton, useUser } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
+import { useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 function ResponsiveMenu({ openNav, setOpenNav }) {
   const { user } = useUser();
+  const btnRef = useRef(null);
+  const signOutBtn = useRef(null);
+
   return (
     <div
       className={`${
@@ -13,7 +23,20 @@ function ResponsiveMenu({ openNav, setOpenNav }) {
       <div>
         <div className="flex items-center justify-start gap-3">
           {user ? <UserButton size={50} /> : <FaUserCircle size={50} />}
-          <div>
+          <SignedOut>
+            <SignInButton
+              className="hidden bg-red-500 text-white px-3 py-1 rounded-2xl cursor-pointer"
+              ref={btnRef}
+            />
+          </SignedOut>
+
+          
+          <div
+            onClick={() => {
+              if (btnRef.current && !user) btnRef.current.click();
+             
+            }}
+          >
             <h1>Hello, {user?.firstName || "Guest"}</h1>
             <h1 className="text-sm text-slate-500 ">Premium User</h1>
           </div>
