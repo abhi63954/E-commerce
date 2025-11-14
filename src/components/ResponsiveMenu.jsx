@@ -29,12 +29,9 @@ function ResponsiveMenu({ openNav, setOpenNav }) {
               ref={btnRef}
             />
           </SignedOut>
-
-          
           <div
             onClick={() => {
               if (btnRef.current && !user) btnRef.current.click();
-             
             }}
           >
             <h1>Hello, {user?.firstName || "Guest"}</h1>

@@ -19,7 +19,7 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
   // console.log(location);
 
   const { cartitem } = useCart();
-  const [openNav, setOpenNav] = useState(false)
+  const [openNav, setOpenNav] = useState(false);
   const toogleDropDown = () => {
     setOpenDropdown(!openDropdown);
   };
@@ -117,12 +117,25 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
               <li>Contact</li>
             </NavLink>
           </ul>
-          <Link to={"/cart"} className="relative">
-            <IoCartOutline className="h-8 w-8" />
-            <span className="bg-red-500 px-2 rounded-full absolute top-[-10px] -right-4 text-white">
-              {cartitem.length}
-            </span>
-          </Link>
+          <SignedIn>
+            <Link to={"/cart"} className="relative">
+              <IoCartOutline className="h-8 w-8" />
+              <span className="bg-red-500 px-2 rounded-full absolute top-[-10px] -right-4 text-white">
+                {cartitem.length}
+              </span>
+            </Link>
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="relative">
+                <IoCartOutline className="h-8 w-8" />
+                <span className="bg-red-500 px-2 rounded-full absolute top-[-10px] -right-4 text-white">
+                  {cartitem.length}
+                </span>
+              </button>
+            </SignInButton>
+          </SignedOut>
+
           <div className="hidden md:block">
             <SignedOut>
               <SignInButton className="bg-red-500 text-white px-3 py-1 rounded-2xl cursor-pointer" />
@@ -131,12 +144,20 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
               <UserButton />
             </SignedIn>
           </div>
-          {
-            openNav ? <HiMenuAlt3 onClick={()=>setOpenNav(false)} className="h-7 w-7 md:hidden"/>:<HiMenuAlt1 onClick={()=>setOpenNav(true)} className="h-7 w-7 md:hidden"/>
-          }
+          {openNav ? (
+            <HiMenuAlt3
+              onClick={() => setOpenNav(false)}
+              className="h-7 w-7 md:hidden"
+            />
+          ) : (
+            <HiMenuAlt1
+              onClick={() => setOpenNav(true)}
+              className="h-7 w-7 md:hidden"
+            />
+          )}
         </nav>
       </div>
-      <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav}/>
+      <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav} />
     </div>
   );
 };
